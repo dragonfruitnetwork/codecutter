@@ -21,7 +21,9 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
           
       - name: NuGet Restore
-        run: nuget restore    
+        run: |
+          nuget locals all -clear
+          nuget restore    
           
       - name: Build
         run: MSBuild ".\DragonFruit.CodeCutter.sln" /t:Build /p:Configuration=Release /p:AssemblyVersion=$date.ToString("yyyy.Mdd")
