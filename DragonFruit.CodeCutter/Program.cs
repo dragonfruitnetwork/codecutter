@@ -28,7 +28,7 @@ namespace DragonFruit.CodeCutter
         private static string ReSharperTools => Path.Combine(Path.GetTempPath(), "ReSharper-Tools");
         private static string InspectCodeTool => Path.Combine(ReSharperTools, Environment.Is64BitOperatingSystem ? "inspectcode.exe" : "inspectcode.x86.exe");
 
-        private static readonly Lazy<ApiClient> ServiceClient = new Lazy<ApiClient>();
+        private static readonly Lazy<ApiClient> ServiceClient = new();
         
         private static void Main(string[] args)
         {
@@ -77,7 +77,15 @@ namespace DragonFruit.CodeCutter
                 var request = new ReSharperToolsDownloadRequest();
                 ConsoleOutput.Print($"JetBrains InspectTool Missing. Downloading from {request.Path}\n", ConsoleColor.DarkGray);
 
-                ServiceClient.Value.Perform(request);
+                ServiceClient.Value.Perform(request, (current, total) =>
+                {
+                    if (total.HasValue)
+                    {
+                        Console.Write($"\rDownloaded {current}/{total.Value} bytes");
+                    }
+                });
+                
+                Console.WriteLine();
                 
                 if(Directory.Exists(ReSharperTools))
                 {
