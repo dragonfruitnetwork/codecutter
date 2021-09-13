@@ -17,7 +17,7 @@
     <ItemGroup>
         <PackageReference Include="DragonFruit.Common.Data" Version="2021.615.34"/>
         <PackageReference Include="Costura.Fody" Version="5.4.0" PrivateAssets="all"/>
-        <PackageReference Include="Fody" Version="6.5.2" PrivateAssets="all"/>
+        <PackageReference Include="Fody" Version="6.5.3" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
